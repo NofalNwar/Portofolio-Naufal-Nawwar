@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Naufal Nawwar Riadi - Portofolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card: #131a29;
+      --accent: #4b9fff;
+      --text: #e6e8ef;
+      --muted: #8b95a9;
+      --light-bg: #f7f9ff;
+      --light-text: #111;
+      --light-card: #fff;
+      --light-muted: #444;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      overflow-x: hidden;
+      transition: background 0.5s, color 0.5s;
+    }
+
+    /* NAVBAR */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      background: rgba(10, 14, 25, 0.85);
+      backdrop-filter: blur(10px);
+      padding: 16px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      transition: background 0.4s;
+    }
+    nav h1 { font-size: 22px; color: var(--accent); font-weight: 700; letter-spacing: 1px; }
+    nav ul { display: flex; list-style: none; gap: 20px; }
+    nav a { color: var(--muted); text-decoration: none; font-weight: 500; transition: 0.3s; }
+    nav a:hover { color: var(--accent); }
+
+    /* MODE SWITCHER */
+    .mode-toggle {
+      cursor: pointer;
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 14px;
+      color: var(--text);
+      transition: all 0.3s ease;
+    }
+    .mode-toggle:hover { background: var(--accent); color: white; }
+
+    /* HERO */
+    .hero {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 160px 20px 100px;
+      background: radial-gradient(circle at top center, #1a2337, #0b0f19 70%);
+      overflow: hidden;
+    }
+    .hero img {
+      width: 160px; height: 160px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 3px solid var(--accent);
+      margin-bottom: 20px;
+      box-shadow: 0 0 25px rgba(75,159,255,0.2);
+      animation: float 4s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    .hero h2 { font-size: 30px; font-weight: 700; margin-bottom: 8px; }
+    .hero p { color: var(--muted); font-size: 16px; max-width: 500px; }
+    .typing { color: var(--accent); font-weight: 600; }
+
+    /* BACKGROUND PARTICLES */
+    .particles {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0; left: 0;
+      overflow: hidden;
+      z-index: 0;
+    }
+    .particles span {
+      position: absolute;
+      display: block;
+      width: 4px;
+      height: 4px;
+      background: var(--accent);
+      opacity: 0.4;
+      animation: move 10s linear infinite;
+    }
+    @keyframes move {
+      0% { transform: translateY(0) scale(1); opacity: 0.4; }
+      100% { transform: translateY(-800px) scale(0.8); opacity: 0; }
+    }
+
+    /* SECTION */
+    section { max-width: 950px; margin: 80px auto; padding: 0 20px; position: relative; z-index: 2; }
+    .card {
+      background: var(--card);
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 0 40px rgba(0,0,0,0.25);
+      margin-bottom: 40px;
+      transition: 0.3s ease;
+    }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 0 50px rgba(75,159,255,0.15); }
+
+    h2 {
+      color: var(--accent);
+      border-left: 4px solid var(--accent);
+      padding-left: 10px;
+      font-size: 22px;
+      margin-bottom: 20px;
+    }
+
+    p { color: var(--muted); }
+
+    /* GALERI SCROLLABLE */
+    .gallery-scroll {
+      display: flex;
+      gap: 15px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 10px;
+      scrollbar-width: thin;
+      scrollbar-color: var(--accent) transparent;
+    }
+    .gallery-scroll::-webkit-scrollbar { height: 8px; }
+    .gallery-scroll::-webkit-scrollbar-thumb {
+      background-color: var(--accent);
+      border-radius: 10px;
+    }
+
+    .gallery-item {
+      flex: 0 0 auto;
+      width: 200px;
+      height: 200px;
+      scroll-snap-align: center;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 12px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    }
+    .gallery-item img:hover {
+      transform: scale(1.08);
+      box-shadow: 0 0 25px rgba(75,159,255,0.4);
+    }
+
+    /* LIGHTBOX */
+    .lightbox {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.85);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .lightbox.active { opacity: 1; pointer-events: all; }
+    .lightbox img {
+      max-width: 90%; max-height: 80%;
+      border-radius: 10px;
+      box-shadow: 0 0 30px rgba(75,159,255,0.3);
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 25px; right: 35px;
+      color: white; font-size: 28px;
+      cursor: pointer; font-weight: bold;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 30px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    /* ANIMASI SCROLL */
+    [data-animate] {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.8s ease;
+    }
+    [data-animate].visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* MODE TERANG */
+    body.light {
+      background: var(--light-bg);
+      color: var(--light-text);
+    }
+    body.light .card { background: var(--light-card); color: var(--light-text); }
+    body.light h2 { color: #0072ff; border-color: #0072ff; }
+    body.light .muted { color: var(--light-muted); }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <h1>Naufal.</h1>
+    <ul>
+      <li><a href="#about">Tentang</a></li>
+      <li><a href="#gallery">Galeri</a></li>
+      <li><a href="#certificate">Sertifikat</a></li>
+      <li><a href="#contact">Kontak</a></li>
+    </ul>
+    <div class="mode-toggle" id="modeToggle">🌙 Mode Gelap</div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="particles">
+      <span style="left: 5%; animation-delay: 2s;"></span>
+      <span style="left: 25%; animation-delay: 4s;"></span>
+      <span style="left: 50%; animation-delay: 1s;"></span>
+      <span style="left: 75%; animation-delay: 3s;"></span>
+      <span style="left: 90%; animation-delay: 5s;"></span>
+    </div>
+    <img src="WhatsApp Image 2024-09-25 at 10.40.38_3db9dd1e.jpg" alt="Foto Naufal Nawwar Riadi">
+    <h2>Naufal Nawwar Riadi</h2>
+    <p>Mahasiswa Informatika | <span class="typing"></span></p>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" data-animate>
+    <div class="card">
+      <h2>Tentang Saya</h2>
+      <p>
+        Halo! Saya <strong>Naufal Nawwar Riadi</strong>, seorang mahasiswa yang memiliki ketertarikan besar di bidang pengembangan web dan teknologi informasi.
+        Saya senang mempelajari bahasa pemrograman baru serta mengasah kemampuan dalam desain antarmuka dan pengembangan aplikasi web.  
+        Tujuan saya adalah menjadi seorang pengembang web profesional yang mampu memberikan solusi digital yang bermanfaat dan efisien.
+      </p>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery" data-animate>
+    <div class="card gallery">
+      <h2>Galeri</h2>
+      <div class="gallery-scroll">
+        <div class="gallery-item"><img src="Poster Loacally New 1.png" alt="Foto 1"></div>
+        <div class="gallery-item"><img src="Poster Ar Sport .png" alt="Foto 2"></div>
+        <div class="gallery-item"><img src="Screenshot 2025-10-30 111310.png" alt="Foto 3"></div>
+        <div class="gallery-item"><img src="IMG_5025.JPG" alt="Foto 4"></div>
+        <div class="gallery-item"><img src="download.png" alt="Foto 5"></div>
+        <div class="gallery-item"><img src="Poster Kel Hidroponik.jpg" alt="Foto 6"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox">
+    <span class="lightbox-close" id="closeLightbox">&times;</span>
+    <img src="" alt="Preview">
+  </div>
+
+  <!-- CERTIFICATE -->
+  <section id="certificate" data-animate>
+    <div class="card certificate">
+      <h2>Sertifikat</h2>
+      <p>Introduction to JavaScript — Great Learning Academy (Maret 2024)</p>
+      <img src="sertifikat java script.png" alt="Sertifikat JavaScript Naufal Nawwar Riadi">
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" data-animate>
+    <div class="card contact">
+      <h2>Kontak</h2>
+      <p>📧 Email: <a href="mailto:nopalriadi80@gmail.com">nopalriadi80@gmail.com</a></p>
+      <p>📱 Instagram: <a href="https://www.instagram.com/naufal.nrr" target="_blank">@naufal.nrr</a></p>
+      <p>💼 LinkedIn: <a href="https://www.linkedin.com/in/naufal-nawwar-riadi-bab818380/" target="_blank">linkedin.com/in/naufalnawwarriadi</a></p>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Naufal Nawwar Riadi. Dibuat dengan ❤️ dan kode.</p>
+  </footer>
+
+  <script>
+    // ANIMASI SCROLL
+    const elements = document.querySelectorAll('[data-animate]');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.2 });
+    elements.forEach(el => observer.observe(el));
+
+    // LIGHTBOX
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = lightbox.querySelector('img');
+    const closeLightbox = document.getElementById('closeLightbox');
+    const galleryImages = document.querySelectorAll('.gallery-item img');
+
+    galleryImages.forEach(img => {
+      img.addEventListener('click', () => {
+        lightbox.classList.add('active');
+        lightboxImg.src = img.src;
+      });
+    });
+    closeLightbox.addEventListener('click', () => lightbox.classList.remove('active'));
+    lightbox.addEventListener('click', (e) => { if (e.target === lightbox) lightbox.classList.remove('active'); });
+
+    // MODE TOGGLE
+    const modeToggle = document.getElementById('modeToggle');
+    modeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('light');
+      modeToggle.textContent = document.body.classList.contains('light') ? '🌞 Mode Terang' : '🌙 Mode Gelap';
+    });
+
+    // TYPING EFFECT
+    const typing = document.querySelector('.typing');
+    const texts = ["Web Developer Enthusiast", "Desainer UI/UX", "Teknologi & Inovasi"];
+    let idx = 0, charIdx = 0;
+    function type() {
+      if (charIdx < texts[idx].length) {
+        typing.textContent += texts[idx].charAt(charIdx);
+        charIdx++;
+        setTimeout(type, 100);
+      } else {
+        setTimeout(erase, 2000);
+      }
+    }
+    function erase() {
+      if (charIdx > 0) {
+        typing.textContent = texts[idx].substring(0, charIdx - 1);
+        charIdx--;
+        setTimeout(erase, 60);
+      } else {
+        idx = (idx + 1) % texts.length;
+        setTimeout(type, 800);
+      }
+    }
+    type();
+  </script>
+</body>
+</html>
